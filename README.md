@@ -1,4 +1,4 @@
-# Bienvenido/a a mi propia versión del Stata Cookbook de la universidad de Maastricht
+# Bienvenido/a a mi propia versión del Stata Cookbook de la Universidad de Maastricht
 
 ![Stata_logo.png](https://upload.wikimedia.org/wikipedia/commons/5/5c/Stata_Logo.svg)
 
