@@ -1,147 +1,147 @@
 ********************************************************************************
-**                          BASIC COMMAND LINE USAGE                          **
+**                   USO BÁSICO DE LA LÍNEA DE COMANDOS                       **
 ********************************************************************************
 
-* For the purpose of this introductory cookbook, we use one command only:
-* summarize. This comamnd provides basic descriptive statitics for one or more
-* variables in your dataset, including the number of observations, their mean
-* value and standard deviation, as well as the largest and smallest value.
+* Para el propósito de este cookbook introductorio, utilizamos un solo comando:
+* summarize. Este comando proporciona estadísticas descriptivas básicas para una
+* o más variables de un conjunto de datos, incluyendo el número de observaciones,
+* su valor medio y la desviación típica, así como el valor más grande y el más 
+* pequeño.
 
-* All examples are based on the Kyrgyz household survey, and particularly the
-* POVERTY.dta dataset.
+* Todos los ejemplos se basan en la encuesta de hogares de Kirguistán y,
+* en particular, en la base de datos POVERTY.dta.
 
 
 
-* USING ONE OR MORE VARIABLES
-* Most commands can be applied to one or more variables. To apply the command
-* to ALL variables, enter the command only:
+* UTILIZANDO UNA O MÁS VARIABLES
+* La mayoría de los comandos pueden aplicarse a una o más variables. Para aplicar 
+* el comando a TODAS las variables, introduzca sólo el comando:
+
 summarize
 
-* To apply the command to individual variables, list them after the command,
-* separated by a space:
+* Para aplicar el comando a variables individuales, enumérelas después del comando,
+* separadas por un espacio:
 
 summarize toty totx
 
-* You can use wildcards to save yourself some typing. The asterisk * stands for
-* any character or characters (one or many). For example:
+* Puedes utilizar símbolos comodín para ahorrarte el tener que teclear. El asterisco
+* representa cualquier carácter o caracteres (uno o varios). Por ejemplo:
 
 summarize y*
 
-* ... is the same as listing every single variable whose name starts with a Y:
+* ... es lo mismo que enumerar cada una de las variables cuyo nombre empieza por Y:
 
 summarize y1 y2 y3 y5 y6 y7 y8 y9 y10 y11 y12 y13 y41 y42 y42 y44 y45 y46
 
-* Another wildcard is the question mark ? standing for any one character:
+* Otro comodín es el signo de interrogación que representa un carácter cualquiera:
 
 summarize y?3
 
-* is the same as listing every single variable whose name started with a Y,
-* followed by any character and ending with a 3:
+* es lo mismo que enumerar cada una de las variables cuyo nombre empezaba por una Y,
+* seguido de cualquier carácter y que termine con un 3:
 
 summarize y13 y43
 
 
 
-* ABBREVIATING VARIABLES NAMES
-* Stata is all about saving you some typing. The most common commands can be
-* abbreviated a lot, e.g. summarize can be abbreviated to "su". Writing:
+* ABREVIATURA DE LOS NOMBRES DE LAS VARIABLES
+* En Stata se trata de ahorrarte algo de tecleo. Los comandos más comunes pueden ser
+* abreviados mucho, por ejemplo, summarize puede ser abreviado a "su". Escribir:
 
 su toty
 
-* is the same as writing
+* es lo mismo que escribir
 
 summarize toty
 
-* If you want to know if you can abbreviate a variable name, use the help
-* function:
+* Si quieres saber si puedes abreviar el nombre de una variable, utiliza la función 
+* help
 
 help summarize
 
-* Under syntax, the abbreviated version of the variable name will be underlined.
+* En la sintaxis, la versión abreviada del nombre de la variable aparecerá subrayada.
 
 
-* USING ALL OBSERVATIONS OR A SUBSET
-* By default, Stata will apply the command to all observations for your
-* variable, possibly excluding any missing values. But sometimes you don't want
-* all observations, but only a subset. For example, the following command will
-* give you a summary of the variables for total household income and
-* expenditure.
+* UTILIZANDO TODAS LAS OBSERVACIONES O UN SUBCONJUNTO
+* Por defecto, Stata aplicará el comando a todas las observaciones de la variable,
+* posiblemente excluyendo los valores perdidos. Pero a veces no se quieren
+* todas las observaciones, sino sólo un subconjunto. Por ejemplo, el siguiente comando
+* proporciona un resumen de las variables de ingresos y gastos totales de los hogares.
 
 summarize toty totx
 
-* But perhaps you care only about households in rural or urban areas. The
-* variable b002 tells you if a household is in an urban (1) or rural (2) area.
-* This command summarizes income and expenditure for urban households by
-* telling Stata to only include observations if the area indicator has the
-* right value.
 
-* Here are the summary values for urban households:
+* Pero quizás solo te interesan los hogares en zonas rurales o urbanas.
+* La variable b002 te dice si un hogar está en un área urbana(1) o rural (2).
+* Este comando resume ingresos y gastos para hogares urbanos diciéndole
+* a Stata que sólo incluya las observaciones pora las que el indicador 
+* del área tenga el valor correcto:
+
+* Aquí están los valores resumidos para los hogares urbanos:
 
 summarize totx toty if b002 == 1
 
-* ... and here for rural households:
+* ... y aquí para los hogares rurales:
 
 summarize totx toty if b002 == 2
 
-* You will usually find that rural households have a lower average income and
-* higher average expenditures. Makes sense!
+* Por lo general, encontrará que los hogares rurales tienen una renta media más baja y
+* gastos medios más elevados. Tiene sentido.
 
-* You can force Stata to take a subset of observations that fulfills multiple
-* options at the same time (logical AND). The following command gives us rural
-* households with no children under 14 living at home. We use the ampersand
-* character & to say AND:
+* Se puede forzar a Stata a tomar un subconjunto de observaciones que cumpla con múltiples
+* condiciones al mismo tiempo (Y lógico). El siguiente comando nos da los hogares rurales,
+* sin niños menores de 14 años viviendo en casa. Usamos el carácter & para decir AND:
 
 summarize totx toty if b002 == 2 & child14 == 0
 
-* The average expenses are usually lower than the average for all rural
-* households. Makes sense!
+* Los gastos medios suelen ser inferiores a la media de todos los
+* hogares rurales. Tiene sentido.
 
-* You can also ensure that Stata checks whether one of several conditions is
-* fulfilled (logical OR). The following command gives us all households who
-* have some income from work:
+* También puede asegurarse de que Stata compruebe si una de varias condiciones se
+* se cumple (O lógico). El siguiente comando nos da todos los hogares que
+* tienen algún ingreso por trabajo (salario):
 
 summarize totx toty if y1 > 0
 
-* And this command gives us all households who have some income from pensions:
+* Y este comando nos da todos los hogares que tienen algún ingreso de las pensiones:
 
 summarize totx toty if y2 > 0
 
-* This command here gives us all households who have income from work OR from
-* pensions. We use the pipe character | to say OR:
+* Este comando nos da aquí todos los hogares que tienen ingresos por trabajo O por
+* pensiones. Utilizamos una barra para decir "O":
 
 summarize totx toty if y1 > 0 | y2 > 0
 
-* Notice something? The total amount of households with some income from either (4801) is less than the sum of the households who have
-* income from work (4069) and from pensions (2307). Logically, there
-* must be 1575 households who have some income from work and
-* additionally some income from pensions!
+* ¿Notas algo? La cantidad total de hogares con algún tipo de ingresos procedentes 
+* de cualquiera de los dos (4801) es inferior a la suma de los hogares que tienen
+* ingresos del trabajo (4069) y de las pensiones (2307). Lógicamente, debe haber
+* 1.575 hogares que tienen algún ingreso del trabajo y ¡adicionalmente algún 
+* ingreso por pensiones!
 
 
 
-* AUTO-COMPLETING VARIABLE NAMES
-* Note that you can use the tab key to extend a variable name. This
-* works fine if there is only one variable name that you could mean.
-* Try typing "summarize xs" and then press the tab key -->|  You'll
-* get:
+* AUTOCOMPLETAR LOS NOMBRES DE LAS VARIABLES
+* Fíjate en que puedes utilizar el tabulador para completar el nombre de una variable. 
+* Esto funciona bien si el nombre de variable es único (no se puede confundir con otro).
+* Prueba a escribir "summarize xs" y luego pulsa la tecla de tabulación -->| Obtendrás:
 
 summarize xserv 
 
-* If you could mean many different names, Stata won't do anything.
-* Try typring "summarize y1" and then press the tab key -->|  Stata
-* won't do a thing. That's because you could mean y1, y10, y11, y12
-* or y13 -- and Stata does not know which one you want.
+* Si hay varios potenciales nombres diferentes, Stata no hará nada.
+* Prueba a escribir "summarize y1" y luego pulsa el tabulador. Stata
+* no hará nada. Esto es porque podrías querer decir y1, y10, y11, y12
+* o y13 -- Y Stata no sabe cuál de ellas quieres.
 
-* If there are multiple options, but Stata can save you some typing,
-* it will go all the way to the letter where you have to make a
-* choice: Try typring "summarize qui" and then press the tab key -->|
-* You'll get:
+* Si hay varias opciones, pero Stata puede ahorrarte algo de tecleo,
+* irá hasta la letra donde tiene que hacer una
+* elección: Prueba a teclear "resumir qui" y luego pulsa la tecla de tabulación -->|
+* Obtendrás:
 
 summarize quintil
 
-* That's because there are two possible variables: quintilc and
-* quintilx. Stata doesn't know which one you want, but will
-* auto-complete to quintil and leave the choice for the final letter
-* to you.
+* Eso es porque hay dos variables posibles: quintilc y
+* quintilx. Stata no sabe cuál quieres, pero
+* autocompletará a quintil y te dejará la elección de la letra final a ti.
 
 
 
