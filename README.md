@@ -1,5 +1,7 @@
 # Bienvenido/a a mi propia versión del Stata Cookbook de la universidad de Maastricht
 
+![Stata_logo.png](https://upload.wikimedia.org/wikipedia/commons/5/5c/Stata_Logo.svg)
+
 ## Introducción
 
 Se trata de una traducción y adaptación del proyecto del compañero [lfkrebs](https://github.com/lfkrebs) de la Universidad de Maastricht. Los archivos originales pueden consultarse [aquí](https://github.com/lfkrebs/stata-cookbook.git). 
