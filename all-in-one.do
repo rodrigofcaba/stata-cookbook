@@ -147,131 +147,135 @@ summarize quintil
 
 
 ********************************************************************************
-**                              IMPORTING DATA                                **
+**                            IMPORTANDO DATOS                                **
 ********************************************************************************
 
 
-* Stata can import data in a variety of formats. The two most common formats are
-* text files (comma-separated values = csv), and Excel files. Virtually all data
-* is either delivered in either of these formats, or can be exported into one
-* of these formats.
+* Stata puede importar datos en diferentes formatos. Los dos más comunes son 
+* archivos de texto (comma-separated values = csv), y archivos de Excel. En general
+* todos los datos son o presentados en uno de esos dos fotmatos, o pueden ser
+* exportados en uno de esos dos formatos.
 
 
 
-** WARNING
+** ATENCIÓN
 
-* Before you import new data, make sure that any existing data has been saved
-* and cleared from Stata memory!
+* ¡Antes de importar nuevos datos, asegúrate de que los datos se han guardado
+* y que has limpiado la memoria de Stata!
 
 
 
-** COMMA-SEPARATED VALUE TEXT FILES
+** ARCHIVOS DE TEXTO SEPARADOS POR COMAS (CSV)
 
-* The "less messy" way is to import from a text file. This is very plain file
-* format that does not require a lot of disk space, and Stata is pretty smart
-* when reading this file format. Usually, you can simply import with:
+* La forma "menos complicada" es importar datos desde un archivo de texto. Este
+* es un formato de archivo muy plano que no requiere mucho espacio en el disco,
+* y Stata es suficientemente inteligente leyendo este formato de archivo. 
+* Normalmente, simplemente puedes importarlo con:
+
 import delimited "filename.csv"
 
-* Stata will treat the first row as variable names, detect the types of
-* varibales automatically and import all observations into memory.
+* Stata tratará la primera fila como los nombres de las variables,
+* detectará los tipos de variables automáticamente e importará todas
+* las observaciones en la memoria.
 
-* Be sure to check your data after import, pay particular attention to the
-* following problems:
+* Asegúrate de comprobar tus datos después de importarlos, presta especial
+* atención a los siguientes problemas:
 
-*  1  Do the variable names look ok? If not, re-import or re-label
-*  2  Are numeric variables actually numeric? If not, see if you can recognize
-*     the source of the problem, e.g. decimal commas when Stata expects decimal
-*     points. Fix the problem, then use
+*  1  ¿Están los nombres de las variables bien? Si no, importa o etiqueta de nuevo.
+*  2  ¿Son las variables numéricas realmente numéricas? Si no, trata de encontrar
+*     el origen del problema, ej. comas decimales cuando Stata espera
+*     puntos como decimales. Resuelve estos problemas y después usa
       destring variablename, replace
-*     to fix the problem. Not solved? Try re-importing using the import dialog.
-*  3  Check if categorical variables are displayed as numbers. If so, you may
-*     want to give each value a label (see labeling.do).
-*  4  Check that all observations were imported. If anything is missing, try
-*     re-importing using the import dialog.
+*     para resolver el problema anterior. ¿No se ha arreglado? Prueba a 
+*     importar de nuevo usando el menú de importación.
+*  3  Comprueba si las variables categóricas se muestran como números. Si
+*     es así, quizás quieras darle a cada categoría una etiqueta (ver labeling.do).
+*  4  Comprueba que todas las observaciones se importaron. Si falta algo,
+*     prueba a importar de nuevo usando el menú de importación.
 
-* As you may have noticed, an easy problem-solving approach is to first import
-* with "import delimited", and if problems show up, revert to the regular dialog
-* you can find under File > Import > Text data delimited in the Stata menu.
-* Using this dialog allows you to adjust all import options while checking a
-* preview of what the imported data will look like. Once you are happy with the
-* settings, the import dialog will produce the corresponding command. Make sure 
-* your log is on so that you capture the correct command.
-
+* Como puedes comprobar, una aproximación para solucionar fácilmente el problema es
+* importar primero con "import delimited" y, si aparecen problemas, volver al menú
+* que puedes encontrar en Archivo > Importar > Archivo de texto separado por comas
+* en el menú de Stata. Usar este menú te permite ajustar todas las opciones de
+* importación a la vez que tienes una previsualización de cómo son los datos que van
+* a ser importados. Una vez que estás contento/a con los ajustes, el menú de importación
+* producirá el comando correspondiente. Asegúrate de que tienes la función "log"
+* encendida para que puedas "capturar" el comando correcto.
 
 
 ** MICROSOFT EXCEL
 
-* The "slightly more messy" way is to import from an Excel sheet. Stata can work
-* with old and new Excel sheets (.xls and .xlsx, respectively). Because Excel
-* sheets can contain multiple worksheets, and because each worksheet can
-* contain multiple tables, you have to specify where the table you want to
-* import is located by giving the name of the worksheet and the top-left and
-* bottom-right corners of the table.
+* La manera "ligeramente más complicada" es importar los datos desde un libro de Excel
+* Stata puede trabajar con archivos de Excel antiguos y nuevos (.xls y, xlsx, respectivamente.
+* Dado que los libros de Excel pueden contener multiples hojas y, dado que cada
+* hoja puede contener múltiples tablas, debes especificar dónde está la tabla
+* que quieres importar proporcionando el nombre de la hoja y las celdas que se
+* encuentran en la esquina superior izquierda e inferior derecha de la tabla.
 
-* Open your workbook in Excel and take note of the name of the worksheet. Excel
-* files created on an English-language Mac or PC tend to name their sheets
-* "Sheet1", "Sheet2", etc. However, these labels are different if the workbook
-* was created on a computer with a different language, and the user can change
-* the names of the sheets as well. It's best to copy the name to the clipboard
-* excactly: double click on the worksheet name (printed on the tab at the
-* bottom of the Excel window). The name is now highlighted and can be copied and
-* pasted into the Stata command below.
+* Abre tu libro de Excel y anota el nombre de la hoja. Los archivos de excel creados en
+* inglés, en un ordenador con Mac o Windows, suelen nombrar las hojas "Sheet1",
+* "Sheet2", etc. Sin embargo, estas etiquetas son diferentes si el libro se creó en
+* un ordenador en otro idioma, y, además, el usuario puede cambiar los nombres de las hojas.
+* Lo mejor es copiar el nombre en el portapapeles: doble click encima del nombre de la hoja
+* (aparece en la pestaña en la parte inferior de la ventana de Excel). El nombre se
+* subrayará y puede copiarse y pegarse en el comando de Stata de abajo.
 
-* Next, check whether your table has the names of the variables in the first
-* row only. Stata only accepts variable names in the top-most row, but Excel
-* has no such restrictions. If you have variable names in more than one row,
-* adjust your table so that the top row has clear, unique variable names and
-* every other row has individual observations.
+* A continuación, comprueba si tu tabla tiene los nombres de las variables sólo en la
+* primera fila.  Stata sólo acepta nombres de variables en la fila de más arriba,
+* pero Excel no tiene esta restricción. Si tienes nombres de variables en más de una fila,
+* ajusta tu tabla de manera que la fila de más arriba tenga nombres de variables claros
+* y únicos, y que el resto de filas sean observaciones individuales.
 
-* Finally, take note of the top-left and bottom-right cells of the table you
-* want Stata to import. E.g. if you have a table that starts at the top-left of
-* the sheet and has ten columns and ten rows, the top-left cell would be A1 and
-* the bottom-right cell would be J10.
+* Finalmente, apunta la celda superior izquierda y la celda inferior derecha de
+* la tabla que quieres que Stata importe. Por ejemplo, si tienes una tabla que empieza
+* en la celda de más arriba y a la izquierda de la hoja y tiene diez columnas y diez filas,
+* la celda superior izquierda será A1 y la celda inferior derecha será J10.
 
-* Adjust the command below with the right name and range to import the table
-* from Excel:
+* Adapta el comando de abajo con el nombre y el rango conrrecto para importar
+* la tabla desde Excel:
 import excel "filename.xlsx", sheet("Sheet1") cellrange(A1:J10) firstrow
 
-* If you have only observations and no variable names, you need to skip the
-* "firstrow" option.
+* Si sólo tienes observaciones y ningún nombre de las variables, debes eliminar
+* la opción "firstrow".
 
-* If you have trouble importing from Excel with the above steps, use the import
-* dialog by choosing File > Import > Excel spreadsheet from the Stata menu.
-* The dialog allows you to select the proper sheet and enter the right cell
-* range; and provides you with a preview of what Stata will import so you can
-* check that the settings are correct.
-
-
-
-** OTHER FILE TYPES
-* Stata allows importing from other file types, including XML (a prominent new
-* file format often used for online data), SAS (a different statistics
-* package), and various text files.
-
-* You won't need these file types in the near future, and they are comparatively
-* rare. We recommend two options:
-
-*  1  If possible, export or convert these files into Excel or CSV format. These
-*     formats are sufficiently standardized and "well-behaved" that adding this
-*     step often makes the overall process less painful.
-*  2  Use the individual import mechanisms offered in the Stata menu under
-*     File > Import. The custom dialogs will walk you through the process of
-*     importing the data you need and often allow you to preview the import so
-*     you can check for problems. Make sure you are already logging while
-*     importing, so that the log captures the correct import command.
+* Si tienes problemas importando desde Excel con los pasos de arriba, usa el menú
+* de importación en Archivo > Importar > Hoja de cálculo de Excel en el menú de Stata.
+* Este menú te permite seleccionar la hoja correcta e introducir el rango de 
+* celdas correcto; a su vez, te ofrece una previsualización de qué va a importar Stata
+* para que puedas comprobar que los ajustes son correctos.
 
 
+** OTRO TIPO DE ARCHIVOS
+* Stata permite importar desde otro tipo de archivos, incuyendo XML (un formato 
+* cada vez más usado para datos en internet), SAS (un paquete stadístico diferente), 
+* y varios archivos de texto.
 
-** IMPORTING FROM DATABASES
+* No necesitarás usar esos tipos de archivos en el futuro cercano, y son comparativamente
+* extraños. Recomendamos dos opciones:
 
-* Stata can connect directly from databases. This usually requires specific
-* settings that specify where the database is located (usually on a server on
-* the internet), any user name and password that may be needed to get access,
-* and how Stata should communicate with the database.
+*  1  Si es posible, exporta o convierte estos archivos a formato Excel o CSV.
+*     Estos formatos son sudicientemente estándar y se "comportan" suficientemente
+*     bien, así que añadir este paso normalmente hace el proceso mucho menos complicado
 
-* Should you need to connect to a database, make sure that you have the
-* documentation specific for that database and use the "odbc" command to connect
-* to it. You can find out more here:
+*  2  Usa los mecanismos de importación individual que ofrece el menú de Stata en
+*     Archivo > Importar. Los menús específicos te guiarán a lo largo del proceso
+*     de importar los datos que necesites y habitualmente te permiten ver una
+*     previsualización de cómo quedarán los datos importados para que puedas comprobar
+*     si hay algún problema. Asegúrate de que estás usando "log" mientras importas,
+*     para que el "log" capture el comando correcto.
+
+
+
+** IMPORTAR DATOS DESDE BASES DE DATOS
+
+* Stata puede conectarse directamente a bases de datos. Esto normalmente requiere
+* ajustes específicos que permitan localizaar la base de datos (normalmente en un
+* servidor de internet), cualquier nombre de usuario y contraseña que puedan ser
+* necesarios para obtener acceso y cómo Stata debería comunicarse con la base de datos.
+
+* Si necesitas conectarte a una base de datos, asegúrate de que tienes la
+* documentación específica para esa base de datos y usa el comando "odbc" para
+* conectarte. Puedes encontrar más información aquí:
 help odbc
 
 
