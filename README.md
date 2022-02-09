@@ -8,7 +8,7 @@ Se trata de una traducción y adaptación del proyecto del compañero [lfkrebs](
 
 ## Descarga lo que necesites
 
-Puedes bajarte [todo el cookbook en un archivo](https://github.com/rodrigofcaba/stata-cookbook/blob/master/all-in-one.do) ([download](https://raw.githubusercontent.com/lfkrebs/stata-cookbook/master/all-in-one.do)), o puedes obtener partes del libro de cocina agrupadas por temas:
+Puedes bajarte [todo el cookbook en un archivo](https://github.com/rodrigofcaba/stata-cookbook/blob/master/all-in-one.do) ([download](https://raw.githubusercontent.com/lfkrebs/stata-cookbook/master/all-in-one.do)), o puedes obtener partes del "libro de recetas" agrupadas por temas:
 
 1. [intro.do](https://github.com/rodrigofcaba/stata-cookbook/blob/master/intro.do) ([download](https://raw.githubusercontent.com/rodrigofcaba/stata-cookbook/master/intro.do))
 2. [logging.do](https://github.com/rodrigofcaba/stata-cookbook/blob/master/logging.do) ([download](https://raw.githubusercontent.com/rodrigofcaba/stata-cookbook/master/logging.do))
